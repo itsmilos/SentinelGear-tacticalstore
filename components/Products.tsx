@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import Card from "./Card";
 
 interface Product {
     id: number;
@@ -29,6 +30,7 @@ export default function Products() {
                 setLoading(false);
             }
         }
+        fetchProducts();
     }, [])
 
     return (
@@ -37,11 +39,11 @@ export default function Products() {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ul>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 p-10">
                     {products.map((product) => (
-                        <li key={product.id}>{product.name}</li>
+                        <Card key={product.id} id={product.id} name={product.name} description={product.description} price={product.price} />
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     )
