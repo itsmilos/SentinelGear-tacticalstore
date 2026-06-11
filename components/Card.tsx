@@ -27,7 +27,7 @@ export default function Card({ id, name, description, price, image }: Props) {
 
     return (
         <div className="bg-neutral-primary-soft rounded-base shadow-xs overflow-hidden transition hover:shadow-md rounded-2xl">
-            <Image className="h-48 bg-gray-500" src={image || "/placeholder.webp"} alt="image" />
+            <Image className="h-48 bg-gray-500" src={image || "/placeholder.webp"} alt="image" width="400" height="10" />
             <div className="p-6 flex flex-col h-full">
                 <h5 className="mt-4 text-xl font-semibold text-heading">
                     {name}

@@ -12,6 +12,8 @@ interface CartState {
     items: CartItem[];
     totalQuantity: number;
     totalPrice: number;
+    isOpen: boolean;
+    currentStep: 'cart' | 'checkout' | 'payment'
 }
 
 export const cartSlice = createSlice({
@@ -20,6 +22,8 @@ export const cartSlice = createSlice({
         items: [],
         totalQuantity: 0,
         totalPrice: 0,
+        isOpen: false,
+        currentStep: 'cart'
     } as CartState,
     reducers: {
         addToCart: (state, action) => {
@@ -61,9 +65,18 @@ export const cartSlice = createSlice({
             state.items = [];
             state.totalQuantity = 0;
             state.totalPrice = 0;
+        },
+        setStep: (state, action) => {
+            state.currentStep = action.payload;
+        },
+        openCart: (state) => {
+            state.isOpen = true;
+        },
+        closeCart: (state) => {
+            state.isOpen = false;
         }
     }
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart, setStep, openCart, closeCart } = cartSlice.actions;
 export default cartSlice.reducer;
