@@ -3,9 +3,13 @@
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { closeCart } from "@/store/slices/cartSlice";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
+import { current } from "@reduxjs/toolkit";
+import Payment from "./Payment";
 
 export default function CartModal() {
     const isOpen = useAppSelector(state => state.cart.isOpen);
+    const currentStep = useAppSelector(state => state.cart.currentStep);
     const dispatch = useAppDispatch();
 
     if (!isOpen) return null;
@@ -23,7 +27,9 @@ export default function CartModal() {
                     </button>
                 </div>
                 <div className="p-4">
-                    <Cart />
+                    {currentStep === 'cart' && <Cart />}
+                    {currentStep === 'checkout' && <Checkout />}
+                    {currentStep === 'payment' && <Payment />}
                 </div>
             </div>
         </div>

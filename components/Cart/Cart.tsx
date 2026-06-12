@@ -2,6 +2,7 @@
 
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { removeFromCart, updateQuantity, clearCart } from "@/store/slices/cartSlice"
+import { setStep } from "@/store/slices/cartSlice";
 
 export default function Cart() {
     const items = useAppSelector((state) => state.cart.items);
@@ -42,7 +43,7 @@ export default function Cart() {
                     ))}
                     <h1>Total: ${totalPrice.toFixed(2)}</h1>
                     <h1>Items: {totalQuantity}</h1>
-                    <button onClick={() => {/* checkout */ }}>
+                    <button onClick={() => dispatch(setStep('checkout'))}>
                         Proceed to Checkout
                     </button>
                 </div>
