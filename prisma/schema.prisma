@@ -25,6 +25,7 @@ model Product {
   category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  Int
   orderItems  OrderItem[]
+  specs       Json?
 }
 
 model Category {
@@ -37,13 +38,20 @@ model Category {
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  user      User        @relation(fields: [userId], references: [id])
-  userId    Int
-  items     OrderItem[]
-  total     Float
-  status    OrderStatus @default(PENDING)
-  createdAt DateTime    @default(now())
+  id              Int         @id @default(autoincrement())
+  user            User?        @relation(fields: [userId], references: [id])
+  userId          Int?
+  items           OrderItem[]
+  total           Float
+  status          OrderStatus @default(PENDING)
+  customerEmail   String
+  customerName    String
+  customerPhone   String
+  shippingCountry String
+  shippingStreet  String
+  shippingCity    String
+  shippingPostal  String
+  createdAt       DateTime    @default(now())
 }
 
 model OrderItem {

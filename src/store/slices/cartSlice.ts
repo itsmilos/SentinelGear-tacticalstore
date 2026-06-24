@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface CartItem {
     id: number;
@@ -8,75 +8,98 @@ interface CartItem {
     image: string | null;
 }
 
+type ShippingMethod = {
+    id: string;
+    label: string;
+    price: number;
+};
+
 interface CartState {
     items: CartItem[];
     totalQuantity: number;
-    totalPrice: number;
-    isOpen: boolean;
-    currentStep: 'cart' | 'checkout' | 'payment'
+    shippingMethods: ShippingMethod[];
+    selectedShipping: ShippingMethod | null;
+    clientSecret: string;
+    isCartOpen: boolean
 }
 
+const initialState: CartState = {
+    items: [],
+    totalQuantity: 0,
+    shippingMethods: [
+        { id: "standard", label: "Standard Delivery (2–5 days)", price: 10 },
+        { id: "express", label: "Express Delivery (1–2 days)", price: 20 },
+        { id: "pickup", label: "Store Pickup", price: 0 }
+    ],
+    selectedShipping: {
+        id: "standard",
+        label: "Standard Delivery (2–5 days)",
+        price: 10
+    },
+    clientSecret: "",
+    isCartOpen: false
+};
+
 export const cartSlice = createSlice({
-    name: 'cart',
-    initialState: {
-        items: [],
-        totalQuantity: 0,
-        totalPrice: 0,
-        isOpen: false,
-        currentStep: 'cart'
-    } as CartState,
+    name: "cart",
+    initialState,
     reducers: {
         addToCart: (state, action) => {
             const item = action.payload as CartItem;
-            const existingItem = state.items.find(i => i.id === item.id);
+            const existing = state.items.find(i => i.id === item.id);
 
-            if (existingItem) {
-                existingItem.quantity += item.quantity;
-                state.totalQuantity += item.quantity;
-                state.totalPrice += item.price * item.quantity;
+            if (existing) {
+                existing.quantity += item.quantity;
             } else {
                 state.items.push(item);
-                state.totalQuantity += item.quantity;
-                state.totalPrice += item.price * item.quantity;
             }
+
+            state.totalQuantity += item.quantity;
         },
+
         removeFromCart: (state, action) => {
-            const itemId = action.payload as number;
-            const existingItemIndex = state.items.findIndex(i => i.id === itemId);
+            const id = action.payload as number;
+            const item = state.items.find(i => i.id === id);
 
-            if (existingItemIndex !== -1) {
-                const existingItem = state.items[existingItemIndex];
-                state.totalQuantity -= existingItem.quantity;
-                state.totalPrice -= existingItem.price * existingItem.quantity;
-                state.items.splice(existingItemIndex, 1);
-            }
+            if (!item) return;
+
+            state.totalQuantity -= item.quantity;
+            state.items = state.items.filter(i => i.id !== id);
         },
+
         updateQuantity: (state, action) => {
-            const { id, quantity } = action.payload as { id: number; quantity: number };
-            const existingItem = state.items.find(i => i.id === id);
+            const { id, quantity } = action.payload;
+            const item = state.items.find(i => i.id === id);
 
-            if (existingItem) {
-                state.totalQuantity += quantity - existingItem.quantity;
-                state.totalPrice += (quantity - existingItem.quantity) * existingItem.price;
-                existingItem.quantity = quantity;
-            }
+            if (!item) return;
+
+            state.totalQuantity += quantity - item.quantity;
+            item.quantity = quantity;
         },
+
         clearCart: (state) => {
             state.items = [];
             state.totalQuantity = 0;
-            state.totalPrice = 0;
+            state.clientSecret = "";
+            state.selectedShipping = state.shippingMethods[0];
         },
-        setStep: (state, action) => {
-            state.currentStep = action.payload;
+
+        setShippingMethod: (state, action) => {
+            state.selectedShipping = action.payload;
         },
-        openCart: (state) => {
-            state.isOpen = true;
+
+        setClientSecret: (state, action) => {
+            state.clientSecret = action.payload;
         },
-        closeCart: (state) => {
-            state.isOpen = false;
-        }
+        openSideBar: (state) => {
+            state.isCartOpen = true;
+        },
+        closeSideBar: (state) => {
+            state.isCartOpen = false;
+        },
     }
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart, setStep, openCart, closeCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart, setShippingMethod, setClientSecret, openSideBar, closeSideBar } = cartSlice.actions;
+
 export default cartSlice.reducer;

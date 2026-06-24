@@ -1,34 +1,88 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { AuthenticateUser } from "@/lib/auth";
+import getShipping from "@/lib/shipping";
 
 export async function POST(request: NextRequest) {
-    const { items } = await request.json();
-    const user = await AuthenticateUser();
-    if (!user) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = user.id;
-    const cartItems = items.map((item: { productId: number; quantity: number; price: number }) => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        price: item.price,
-    }));
-
-    const total = items.reduce((sum: number, item: { quantity: number; price: number }) => sum + (item.quantity * item.price), 0);
     try {
+        const { items, customer, address } = await request.json();
+
+
+        if (!items?.length) {
+            return NextResponse.json(
+                { error: "Cart is empty" },
+                { status: 400 }
+            );
+        }
+
+        if (!customer?.email) {
+            return NextResponse.json(
+                { error: "Missing customer data" },
+                { status: 400 }
+            );
+        }
+
+        if (!address?.country) {
+            return NextResponse.json(
+                { error: "Missing address" },
+                { status: 400 }
+            );
+        }
+
+        const subtotal = items.reduce(
+            (sum: number, item: any) =>
+                sum + item.price * item.quantity,
+            0
+        );
+
+        const shipping = getShipping(address.country);
+        const total = subtotal + shipping;
+
+        const cartItems = items.map((item: any) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: item.price,
+        }));
+
+        console.log("SHIPPING:", shipping);
+        console.log("TOTAL BEFORE SAVE:", total);
+
         const order = await prisma.order.create({
             data: {
-                userId,
                 total,
+                status: "PENDING",
+                customerName: `${customer.firstName} ${customer.lastName}`,
+                customerEmail: customer.email,
+                customerPhone: customer.phone,
+                shippingCountry: address.country,
+                shippingStreet: address.street,
+                shippingCity: address.city,
+                shippingPostal: address.postalCode,
+
                 items: {
-                    create: cartItems
+                    create: cartItems,
                 },
-            }
+            },
         });
 
-        return NextResponse.json({ message: "Order created successfully.", order }, { status: 201 });
+        console.log("FINAL ORDER TOTAL:", order.total);
+
+        return NextResponse.json(
+            {
+                message: "Order created successfully",
+                orderId: order.id,
+                total,
+            },
+            { status: 201 }
+        );
     } catch (error) {
-        return NextResponse.json({ error: "Failed to create order." }, { status: 500 });
+        console.error("ORDER ERROR:", error);
+
+        return NextResponse.json(
+            {
+                error: "Internal Server Error",
+                details: error instanceof Error ? error.message : error
+            },
+            { status: 500 }
+        );
     }
 }
