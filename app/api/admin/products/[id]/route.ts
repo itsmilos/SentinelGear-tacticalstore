@@ -28,7 +28,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     if (!user || user.role !== "ADMIN") {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const id = await params;
+    const { id } = await params;
     try {
         const product = await prisma.product.findUnique({ where: { id: parseInt(id) } });
         if (!product) {
