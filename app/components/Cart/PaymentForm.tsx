@@ -38,28 +38,18 @@ export default function PaymentForm({ order }: any) {
                 </Link>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl mb-10 font-display">
-                Payment
-            </h1>
+            <h1 className="text-5xl lg:text-7xl mb-10 font-display">Payment</h1>
 
             <div className="bg-[#181818] border border-[#353535] p-6 mb-8 flex justify-between items-start">
 
                 <div>
-                    <p className="text-xs text-gray-500 tracking-widest">
-                        ORDER FOR
-                    </p>
-                    <h2 className="text-xl font-display">
-                        {order.customerName}
-                    </h2>
+                    <p className="text-xs text-gray-500 tracking-widest">ORDER FOR</p>
+                    <h2 className="text-xl font-display">{order.customerName}</h2>
                 </div>
 
                 <div className="text-right">
-                    <p className="text-xs text-gray-500 tracking-widest">
-                        TOTAL
-                    </p>
-                    <p className="text-2xl font-display">
-                        ${order.total}
-                    </p>
+                    <p className="text-xs text-gray-500 tracking-widest">TOTAL</p>
+                    <p className="text-2xl font-display">${order.total}</p>
                 </div>
 
             </div>
@@ -79,9 +69,7 @@ export default function PaymentForm({ order }: any) {
                 </button>
 
                 {error && (
-                    <p className="text-red-500 text-sm">
-                        {error}
-                    </p>
+                    <p className="text-red-500 text-sm">{error}</p>
                 )}
 
             </form>

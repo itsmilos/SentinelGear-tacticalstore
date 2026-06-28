@@ -1,7 +1,6 @@
 import ProductDetails from "@/app/components/ProductDetails";
+import RelatedProducts from "@/app/components/RelatedProducts";
 import { prisma } from "@/lib/prisma";
-import { useAppDispatch } from "@/store/hooks";
-import { addToCart } from "@/store/slices/cartSlice";
 
 type RouteParams = {
     params: Promise<{ id: string }>;
@@ -21,8 +20,9 @@ export default async function ProductPage({ params }: RouteParams) {
     }
 
     return (
-        <ProductDetails product={product} />
+        <>
+            <ProductDetails product={product} />
+            <RelatedProducts categoryId={product.categoryId} excludeId={product.id} />
+        </>
     )
-
-
 }

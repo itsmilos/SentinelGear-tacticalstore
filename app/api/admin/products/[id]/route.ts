@@ -2,12 +2,12 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { AuthenticateUser } from "@/lib/auth";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const user = await AuthenticateUser();
     if (!user || user.role !== "ADMIN") {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const id = params.id;
     try {
         const product = await prisma.product.findUnique({ where: { id: parseInt(id) } });
         if (!product) {

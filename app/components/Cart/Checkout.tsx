@@ -7,6 +7,9 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
+const labelClass = "text-xs text-gray-500 tracking-widest";
+const inputClass = "border border-[#353535] bg-[#181818] p-3 w-full text-sm"
+
 export default function Checkout() {
     const router = useRouter();
     const [form, setForm] = useState({
@@ -102,101 +105,36 @@ export default function Checkout() {
                         </div>
                     </div>
 
-                    <h1 className="text-5xl lg:text-7xl mb-20 font-display">
-                        Checkout
-                    </h1>
+                    <h1 className="text-5xl lg:text-7xl mb-20 font-display">Checkout</h1>
 
-                    <h2 className="text-2xl lg:text-3xl mb-4 font-display">
-                        Customer Information
-                    </h2>
+                    <h2 className="text-2xl lg:text-3xl mb-4 font-display">Customer Information</h2>
 
                     <div className="flex flex-col gap-5">
                         <div className="flex flex-col md:flex-row gap-5">
                             <div className="flex flex-col gap-1 flex-1">
-                                <label
-                                    htmlFor="firstName"
-                                    className="text-xs text-gray-500 tracking-widest"
-                                >
-                                    FIRST NAME *
-                                </label>
-
-                                <input
-                                    id="firstName"
-                                    name="firstName"
-                                    className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                    required
-                                    onChange={handleChange}
-                                    value={form.firstName}
-                                />
+                                <label htmlFor="firstName" className={labelClass}>FIRST NAME *</label>
+                                <input id="firstName" name="firstName" className={inputClass} required onChange={handleChange} value={form.firstName} />
                             </div>
 
                             <div className="flex flex-col gap-1 flex-1">
-                                <label
-                                    htmlFor="lastName"
-                                    className="text-xs text-gray-500 tracking-widest"
-                                >
-                                    LAST NAME *
-                                </label>
-
-                                <input
-                                    id="lastName"
-                                    name="lastName"
-                                    className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                    required
-                                    onChange={handleChange}
-                                    value={form.lastName}
-                                />
+                                <label htmlFor="lastName" className={labelClass}>LAST NAME *</label>
+                                <input id="lastName" name="lastName" className={inputClass} required onChange={handleChange} value={form.lastName} />
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-1">
-                            <label
-                                htmlFor="email"
-                                className="text-xs text-gray-500 tracking-widest"
-                            >
-                                EMAIL *
-                            </label>
-
-                            <input
-                                id="email"
-                                name="email"
-                                className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                required
-                                onChange={handleChange}
-                                value={form.email}
-                            />
+                            <label htmlFor="email" className={labelClass}>EMAIL *</label>
+                            <input id="email" name="email" className={inputClass} required onChange={handleChange} value={form.email} />
                         </div>
 
                         <div className="flex flex-col gap-1">
-                            <label
-                                htmlFor="phone"
-                                className="text-xs text-gray-500 tracking-widest"
-                            >
-                                PHONE *
-                            </label>
-
-                            <input
-                                id="phone"
-                                type="number"
-                                name="phone"
-                                className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                required
-                                onChange={handleChange}
-                                value={form.phone}
-                            />
+                            <label htmlFor="phone" className={labelClass}>PHONE *</label>
+                            <input id="phone" type="number" name="phone" className={inputClass} required onChange={handleChange} value={form.phone} />
                         </div>
 
-                        <h2 className="text-2xl lg:text-3xl mt-6 font-display">
-                            Shipping Address
-                        </h2>
+                        <h2 className="text-2xl lg:text-3xl mt-6 font-display">Shipping Address</h2>
 
-                        <select
-                            className="bg-[#181818] border border-[#353535] w-full p-3"
-                            name="country"
-                            value={form.country}
-                            onChange={handleChange}
-                            required
-                        >
+                        <select className="bg-[#181818] border border-[#353535] w-full p-3" name="country" value={form.country} onChange={handleChange} required>
                             <option value="">Select Country</option>
                             <option value="ba">Bosnia and Herzegovina</option>
                             <option value="hr">Croatia</option>
@@ -207,73 +145,25 @@ export default function Checkout() {
                         {form.country && (
                             <div className="flex flex-col gap-5 mt-2">
                                 <div className="flex flex-col gap-1">
-                                    <label
-                                        htmlFor="street"
-                                        className="text-xs text-gray-500 tracking-widest"
-                                    >
-                                        STREET ADDRESS *
-                                    </label>
-
-                                    <input
-                                        id="street"
-                                        name="street"
-                                        className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                        onChange={handleChange}
-                                        value={form.street}
-                                    />
+                                    <label htmlFor="street" className={labelClass}>STREET ADDRESS *</label>
+                                    <input id="street" name="street" className={inputClass} onChange={handleChange} value={form.street} />
                                 </div>
 
                                 <div className="flex flex-col md:flex-row gap-5">
                                     <div className="flex flex-col gap-1 flex-1">
-                                        <label
-                                            htmlFor="city"
-                                            className="text-xs text-gray-500 tracking-widest"
-                                        >
-                                            CITY *
-                                        </label>
-
-                                        <input
-                                            id="city"
-                                            name="city"
-                                            className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                            required
-                                            onChange={handleChange}
-                                            value={form.city}
-                                        />
+                                        <label htmlFor="city" className={labelClass}>CITY *</label>
+                                        <input id="city" name="city" className={inputClass} required onChange={handleChange} value={form.city} />
                                     </div>
 
                                     <div className="flex flex-col gap-1 flex-1">
-                                        <label
-                                            htmlFor="postalCode"
-                                            className="text-xs text-gray-500 tracking-widest"
-                                        >
-                                            POSTAL CODE *
-                                        </label>
-
-                                        <input
-                                            id="postalCode"
-                                            name="postalCode"
-                                            className="border border-[#353535] bg-[#181818] p-3 w-full text-sm"
-                                            required
-                                            onChange={handleChange}
-                                            value={form.postalCode}
-                                        />
+                                        <label htmlFor="postalCode" className={labelClass}>POSTAL CODE *</label>
+                                        <input id="postalCode" name="postalCode" className={inputClass} required onChange={handleChange} value={form.postalCode} />
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-1">
-                                    <label
-                                        htmlFor="special"
-                                        className="text-xs text-gray-500 tracking-widest"
-                                    >
-                                        ORDER NOTES (OPTIONAL)
-                                    </label>
-
-                                    <textarea
-                                        id="special"
-                                        className="bg-[#181818] border border-[#353535] w-full h-40 p-3 text-sm"
-                                        placeholder="Special delivery instructions..."
-                                    />
+                                    <label htmlFor="special" className={labelClass}>ORDER NOTES (OPTIONAL)</label>
+                                    <textarea id="special" className="bg-[#181818] border border-[#353535] w-full h-40 p-3 text-sm" placeholder="Special delivery instructions..." />
                                 </div>
                             </div>
                         )}
@@ -337,9 +227,7 @@ export default function Checkout() {
                     </div>
 
                     {error && (
-                        <p className="text-red-500 text-sm mt-4">
-                            {error}
-                        </p>
+                        <p className="text-red-500 text-sm mt-4">{error}</p>
                     )}
 
                     <button

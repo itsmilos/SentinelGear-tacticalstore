@@ -5,9 +5,10 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const categoryQuery = searchParams.get('category');
     const sortQuery = searchParams.get('sort');
+    const excludeQuery = searchParams.get('exclude');
+    const limitQuery = searchParams.get('limit');
 
     const where: any = {};
-
 
     if (categoryQuery) {
         let categoryIds: number[] | undefined = undefined;
@@ -17,7 +18,6 @@ export async function GET(request: NextRequest) {
             include: { children: true }
         })
 
-
         const ids = item?.children.map((child) => child.id);
         if (item && ids) {
             categoryIds = [item.id, ...ids];
@@ -25,6 +25,12 @@ export async function GET(request: NextRequest) {
 
         where.categoryId = {
             in: categoryIds
+        }
+    }
+
+    if (excludeQuery) {
+        where.id = {
+            not: Number(excludeQuery)
         }
     }
 
@@ -45,7 +51,8 @@ export async function GET(request: NextRequest) {
     try {
         const products = await prisma.product.findMany({
             where,
-            orderBy
+            orderBy,
+            take: limitQuery ? Number(limitQuery) : undefined
         })
 
         return NextResponse.json({ products }, { status: 200 });

@@ -9,7 +9,6 @@ import Image from "next/image";
 export default function Cart() {
     const items = useAppSelector((state) => state.cart.items);
     const subTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
 
     const dispatch = useAppDispatch();
 
@@ -72,12 +71,7 @@ export default function Cart() {
                                 ${subTotal.toFixed(2)}
                             </span>
                         </div>
-                        <button
-                            className="mt-6 w-full bg-white text-black py-4 flex items-center justify-center gap-2 hover:bg-green-200 transition font-display text-2xl"
-                            onClick={goToCheckout}
-                        >
-                            Proceed to Checkout
-                        </button>
+                        <button className="mt-6 w-full bg-white text-black py-4 flex items-center justify-center gap-2 hover:bg-green-200 transition font-display text-2xl" onClick={goToCheckout}>Proceed to Checkout </button>
                         <p className="text-center text-xs mt-5 text-gray-500 tracking-widest">SECURE PAYMENT * WORLDWIDESHIPPING</p>
                     </div>
                 </div>

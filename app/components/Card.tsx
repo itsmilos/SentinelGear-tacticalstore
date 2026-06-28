@@ -13,9 +13,16 @@ interface Props {
 
 export default function Card({ id, name, description, price, image }: Props) {
     return (
-        <Link href={`/products/${id}`} className="relative group bg-neutral-primary-soft rounded-base shadow-xs overflow-hidden transition-transform hover:scale-[1.01] rounded-1xl border-[#353535] border hover:border-[#868686] w-full">
+        <Link href={`/products/${id}`} className="relative group bg-neutral-primary-soft rounded-base shadow-xs overflow-hidden transition-transform rounded-1xl border-[#353535] border hover:border-[#868686] w-full">
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent z-10 pointer-events-none" />
-            <Image className="h-48 bg-gray-500" src={image || "/placeholder.webp"} alt="image" width="400" height="10" />
+            <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <Image
+                    src={image || "/placeholder.webp"}
+                    alt={name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+            </div>
             <div className="p-6 flex flex-col h-full">
                 <h5 className="mt-4 text-xl font-semibold text-heading">{name}</h5>
                 <p className="mt-2 text-sm text-gray-500">{description}</p>

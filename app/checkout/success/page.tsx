@@ -49,42 +49,25 @@ export default function Success() {
                 </Link>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl mb-10 font-display">
-                Order Confirmed
-            </h1>
+            <h1 className="text-5xl lg:text-7xl mb-10 font-display">Order Confirmed</h1>
 
             <div className="bg-[#181818] border border-[#353535] p-5 rounded mb-6">
-                <p className="text-xs text-gray-400 uppercase tracking-widest">
-                    Order ID
-                </p>
-                <h2 className="text-2xl font-bold mt-2">
-                    #{order?.order.id}
-                </h2>
+                <p className="text-xs text-gray-400 uppercase tracking-widest">Order ID</p>
+                <h2 className="text-2xl font-bold mt-2">#{order?.order.id}</h2>
             </div>
 
             <div className="bg-[#181818] border border-[#353535] p-5 rounded mb-6">
-                <p className="text-xs text-gray-400 uppercase tracking-widest">
-                    Status
-                </p>
-
-                <span className="inline-block mt-2 px-4 py-2 bg-amber-500 text-amber-900 font-bold rounded">
-                    {order?.order.status}
-                </span>
+                <p className="text-xs text-gray-400 uppercase tracking-widest">Status</p>
+                <span className="inline-block mt-2 px-4 py-2 bg-amber-500 text-amber-900 font-bold rounded">{order?.order.status}</span>
             </div>
 
             <div className="mt-10">
-                <h1 className="text-xl font-bold">
-                    We’ve received your order and are preparing it.
-                </h1>
+                <h1 className="text-xl font-bold">We’ve received your order and are preparing it.</h1>
 
-                <p className="text-gray-400 mt-2">
-                    You will receive an email confirmation shortly.
-                </p>
+                <p className="text-gray-400 mt-2"> You will receive an email confirmation shortly.</p>
             </div>
 
-            <div className="mt-8 text-sm text-gray-400">
-                Estimated dispatch: <span className="text-white">1–2 business days</span>
-            </div>
+            <div className="mt-8 text-sm text-gray-400">Estimated dispatch: <span className="text-white">1–2 business days</span></div>
         </div>
     )
 }
