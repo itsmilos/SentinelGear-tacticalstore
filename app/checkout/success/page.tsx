@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
-export default function Success() {
+function SuccessContent() {
     const searchParams = useSearchParams()
     const orderId = searchParams.get("orderId")
 
@@ -62,12 +62,19 @@ export default function Success() {
             </div>
 
             <div className="mt-10">
-                <h1 className="text-xl font-bold">We’ve received your order and are preparing it.</h1>
-
+                <h1 className="text-xl font-bold">We've received your order and are preparing it.</h1>
                 <p className="text-gray-400 mt-2"> You will receive an email confirmation shortly.</p>
             </div>
 
             <div className="mt-8 text-sm text-gray-400">Estimated dispatch: <span className="text-white">1–2 business days</span></div>
         </div>
+    )
+}
+
+export default function Success() {
+    return (
+        <Suspense fallback={<p className="text-white text-center py-10">Loading...</p>}>
+            <SuccessContent />
+        </Suspense>
     )
 }
