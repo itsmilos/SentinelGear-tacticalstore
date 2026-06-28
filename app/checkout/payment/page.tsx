@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -44,8 +44,10 @@ export default function PaymentPage() {
     if (!clientSecret) return <p>Missing client secret</p>;
 
     return (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <Payment />
-        </Elements>
+        <Suspense>
+            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <Payment />
+            </Elements>
+        </Suspense>
     );
 }
