@@ -24,7 +24,15 @@ export async function POST(req: NextRequest) {
         if (!isMatch) {
             return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
         }
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, { expiresIn: "7d" });
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                role: user.role,
+                email: user.email,
+            },
+            process.env.JWT_SECRET!,
+            { expiresIn: "7d" }
+        );
         const cookieStore = await cookies();
         cookieStore.set({
             name: "token",

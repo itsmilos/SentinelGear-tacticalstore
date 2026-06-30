@@ -13,7 +13,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         if (!product) {
             return NextResponse.json({ error: "Product not found" }, { status: 404 });
         }
-        const updated = prisma.product.update({
+        const updated = await prisma.product.update({
             where: { id: parseInt(id) },
             data: await req.json()
         })

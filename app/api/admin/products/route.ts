@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
             data: {
                 name,
                 description,
-                price,
-                stock,
-                categoryId,
+                price: parseFloat(price),
+                stock: parseInt(stock),
+                categoryId: parseInt(categoryId),
                 image
             }
         });

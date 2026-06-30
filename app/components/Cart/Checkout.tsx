@@ -95,10 +95,7 @@ export default function Checkout() {
                 <div className="flex-1 max-w-3xl">
                     <div className="mb-10">
                         <div className="pt-8">
-                            <Link
-                                href="/"
-                                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition tracking-widest"
-                            >
+                            <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition tracking-widest">
                                 <ArrowLeft size={18} />
                                 BACK TO SHOP
                             </Link>
