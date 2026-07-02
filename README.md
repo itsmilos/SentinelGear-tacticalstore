@@ -58,4 +58,4 @@ src/
 
 👤 Author
 
-Skem — github.com/itsmilos
+Milos Lazendic — github.com/itsmilos
