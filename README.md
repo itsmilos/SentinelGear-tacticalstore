@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🎯 Sentinel Gear (TacticalStore)
 
-## Getting Started
+A full-stack airsoft e-commerce store with a dark, tactical "command center" vibe. Browse gear, filter and sort products, check out as a guest, and pay with Stripe — no BS, just loadout shopping.
 
-First, run the development server:
+📦 Stack
 
-```bash
+
+Next.js 14 (App Router)
+TypeScript
+Tailwind CSS
+Prisma + PostgreSQL
+Redux Toolkit
+Stripe
+Supabase Storage
+JWT auth (via jose, Edge-compatible)
+
+
+✨ Quick start
+
+bashnpm install
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Don't forget your .env — you'll need a Postgres connection string, Stripe keys, and Supabase credentials.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🛒 Shopping flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+Browse & filter — category filters + custom sort dropdown, all URL-based
+Add to cart — Redux-powered cart sidebar
+Checkout — multi-step modal, guest checkout supported (no account needed)
+Pay — Stripe handles the money, webhooks handle the confirmation
+Admin — full CRUD on products, protected by role-based JWT auth
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🎨 Look & feel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Dark, gothic-military aesthetic. Sharp font-display headers, #353535 borders, uppercase eyebrow labels everywhere. Think "special forces gear catalog," not "cute boutique."
 
-## Deploy on Vercel
+🤖 How it works
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Auth is JWT-based with roles baked into the token, checked in middleware to gate /admin routes. Products, filtering, and sorting are driven by Prisma queries with URL search params as the source of truth — no client-side state drift. Cart lives in Redux and survives the checkout modal's multiple steps. Orders don't require a userId (guest checkout is a first-class citizen, not an afterthought), and product images are hosted on Supabase Storage instead of bloating the repo.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📁 Project structure
+
+src/
+  app/
+    admin/              # Admin dashboard + protected routes
+    api/                # Route handlers (auth, products, checkout, webhooks)
+    products/            # Product listing + detail pages
+  components/
+    cart/                # Cart sidebar, checkout modal
+    products/            # Filter bar, sort dropdown, product cards
+  lib/
+    prisma.ts            # Prisma client
+    auth.ts              # JWT helpers
+  store/                 # Redux slices
+
+👤 Author
+
+Skem — github.com/itsmilos
