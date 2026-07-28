@@ -1,18 +1,18 @@
 import Navbar from "@/app/components/Navbar";
 import CartSideBar from "@/app/components/Cart/CartSidebar";
+import Footer from "../components/Footer";
 
 export default function ShopLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <>
-            <Navbar />
-            <CartSideBar />
-            <main className="pt-15">
-                {children}
-            </main>
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <CartSideBar />
+      <main className="pt-15">{children}</main>
+      <Footer />
+    </>
+  );
 }
